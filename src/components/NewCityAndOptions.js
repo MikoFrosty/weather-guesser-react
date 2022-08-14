@@ -1,10 +1,10 @@
 import "./NewCityAndOptions.css";
 
-export default function NewCityAndOptions() {
+export default function NewCityAndOptions({ onNewCityClick }) {
     return (
         <div id="button-wrapper">
-          <button id="new-city-button" class="button">New City</button>
-          <button id="option-button" class="button">Options</button>
+          <button id="new-city-button" className="button" onClick={onNewCityClick}>New City</button>
+          <button id="option-button" className="button">Options</button>
         </div>
     );
 }
