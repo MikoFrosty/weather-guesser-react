@@ -1,38 +1,152 @@
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
+  min-height: 90vh;
+  background-image: url("../public/weather-guesser-background.jpg");
+  background-position: left top;
+  background-attachment: fixed;
+  background-size: auto auto;
+  background-repeat: no-repeat;
+}
+
+#main-content {
+  border: 1px solid black;
+  border-radius: 16px;
+  box-shadow: 0 0 100px black;
+  padding: 50px;
+  margin: 5px;
+  width: 50%;
+  height: auto;
+  background-image: linear-gradient(
+    rgb(236, 246, 255),
+    rgba(255, 255, 255, 0.801)
+  );
+}
+
+#main-content > h2 {
+  padding: 20px;
+}
+
+#current-city {
+  color: rgb(201, 0, 0);
+}
+
+#answer {
+  padding: 16px;
+}
+
+#current-weather {
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  font-size: 1rem;
+  margin: auto;
 }
 
-.App-link {
-  color: #61dafb;
+#current-weather img {
+  margin-left: 5px;
 }
 
-@keyframes App-logo-spin {
-  from {
+.button {
+  border-radius: 5px;
+  background-color: rgb(43, 43, 241);
+  background-image: linear-gradient(rgb(43, 43, 241), rgb(4, 4, 150));
+  color: rgba(250, 250, 250, 1);
+  font-size: 1.5rem;
+  margin: 0;
+  padding: 8px;
+  border: 1px solid black;
+  cursor: pointer;
+}
+@media (hover: hover) {
+  .button:hover {
+    background-image: linear-gradient(rgb(37, 37, 207), rgb(1, 1, 99));
+    background-color: rgb(0, 0, 143);
+  }
+}
+
+.loader {
+  margin: 20px auto;
+  border: 16px solid #f3f3f3;
+  border-top: 16px solid #3498db;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
     transform: rotate(0deg);
   }
-  to {
+  100% {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  * {
+    font-size: 1em;
+  }
+  #main-content {
+    padding-bottom: 20px;
+    width: 70%;
+  }
+  iframe {
+    width: 420px;
+    height: 400px;
+  }
+  #options-wrapper {
+    font-size: 1em;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .App {
+    min-height: 78vh;
+  }
+  #button-wrapper {
+    width: 100%;
+  }
+  #weather-guesser input {
+    min-width: 60px;
+  }
+  input[type="submit"] {
+    font-size: 1rem;
+    width: 100px;
+  }
+  section#main-content {
+    width: 80%;
+    padding: 20px;
+  }
+  #current-weather {
+    font-size: 0.8em;
+  }
+  .loader {
+    width: 5px;
+    height: 5px;
+  }
+  iframe {
+    width: 100%;
+    height: 300px;
+  }
+}
+@media only screen and (max-width: 300px) {
+  * {
+    font-size: 0.95em;
   }
 }

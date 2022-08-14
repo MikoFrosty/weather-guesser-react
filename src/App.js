@@ -1,24 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Header from "./Header";
+import Footer from "./Footer";
+import NewCityAndOptions from "./components/NewCityAndOptions";
+import GuessForm from "./components/GuessForm";
+import MapAndOptions from "./components/MapAndOptions";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div className="App">
+        <Header />
+        <section id="main-content">
+          <NewCityAndOptions />
+          <h2>
+            How hot is <span id="current-city"></span> right now?
+          </h2>
+          <GuessForm />
+          <p>
+            <sub>
+              You win if your guess is{" "}
+              <span id="win-condition">within 10°</span>
+            </sub>
+          </p>
+          {/*<!-- Answer -->*/}
+          <p id="answer"></p>
+          <div id="current-weather"></div>
+          <MapAndOptions />
+        </section>
+      </div>
+      <Footer />
+    </>
   );
 }
 
