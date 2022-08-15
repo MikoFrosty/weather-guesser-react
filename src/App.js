@@ -27,8 +27,9 @@ function App() {
     // Toggle options screen
   }
 
-  function handleFormSubmit() {
-    // Handle form submission
+  function handleFormSubmit(e) {
+    e.preventDefault();
+    console.log(e.target.guess.value);
   }
 
   return (
@@ -37,7 +38,7 @@ function App() {
         <Header />
         <section id="main-content">
           <NewCityAndOptions onNewCityClick={handleNewCityClick} />
-          <GuessForm currentCity={cityString} />
+          <GuessForm currentCity={cityString} onFormSubmit={handleFormSubmit} />
           <p>
             <sub>
               You win if your guess is{" "}
