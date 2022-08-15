@@ -1,0 +1,44 @@
+#options-wrapper {
+  font-size: 0.7em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  background-color: rgba(230, 230, 230, 1);
+  border: 2px solid black;
+}
+
+#options-wrapper p {
+  padding: 5px;
+}
+
+.options-form {
+  display: inline-block;
+  text-align: left;
+  padding: 10px 0;
+  width: 44%;
+}
+
+#region {
+  border-radius: 2px;
+  border: 1px solid grey;
+  color: black;
+  background-color: white;
+  padding: 3px;
+  outline: none;
+}
+.hide {
+  display: none !important;
+}
+
+@media only screen and (max-width: 1000px) {
+  #options-wrapper {
+    font-size: 1em;
+  }
+}
