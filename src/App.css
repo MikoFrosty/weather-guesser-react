@@ -67,6 +67,16 @@
   }
 }
 
+.loseh-text {
+  color: rgb(201, 0, 0);
+}
+.losel-text {
+  color: rgb(0, 0, 255);
+}
+.win-text {
+  color: rgb(0, 161, 0);
+}
+
 .loader {
   margin: 20px auto;
   border: 16px solid #f3f3f3;
