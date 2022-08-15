@@ -23,3 +23,20 @@
   padding: 4px;
   width: 60px;
 }
+
+#submit {
+    padding: 7px;
+}
+#submit:focus {
+    padding: 6px;
+}
+
+@media only screen and (max-width: 600px) {
+  #weather-guesser input {
+    min-width: 60px;
+  }
+  #submit {
+    font-size: 1rem;
+    width: 100px;
+  }
+}
