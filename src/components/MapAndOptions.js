@@ -4,17 +4,17 @@ export default function MapAndOptions() {
   return (
     <div id="map-and-options-wrapper">
       <div id="options-wrapper" className="hide">
-        <form id="options-temperature-form" class="options-form">
+        <form id="options-temperature-form" className="options-form">
           <p>
             <strong>Temperature:</strong>
           </p>
-          <input type="radio" id="f" name="temp" value="1" checked />
+          <input type="radio" id="f" name="temp" value="1" defaultChecked />
           <label htmlFor="f">Fahrenheit</label>
           <br />
           <input type="radio" id="c" name="temp" value="0" />
           <label htmlFor="c">Celsius</label>
         </form>
-        <form id="options-region-form" class="options-form">
+        <form id="options-region-form" className="options-form">
           <p>
             <strong>Region:</strong>
           </p>
@@ -25,11 +25,11 @@ export default function MapAndOptions() {
             <option value="3">Asia</option>
           </select>
         </form>
-        <form id="options-difficulty-form" class="options-form">
+        <form id="options-difficulty-form" className="options-form">
           <p>
             <strong>Difficulty:</strong>
           </p>
-          <input type="radio" id="easy" name="difficulty" value="0" checked />
+          <input type="radio" id="easy" name="difficulty" value="0" defaultChecked />
           <label htmlFor="easy">Within 10°</label>
           <br />
           <input type="radio" id="medium" name="difficulty" value="1" />
