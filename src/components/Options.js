@@ -1,9 +1,9 @@
 import "./Options.css";
 
-export default function Options() {
+export default function Options({ onOptionsChange }) {
   return (
     <div id="options-wrapper" className="hide">
-      <form id="options-temperature-form" className="options-form">
+      <form className="options-form" onChange={onOptionsChange}>
         <p>
           <strong>Temperature:</strong>
         </p>
@@ -12,8 +12,6 @@ export default function Options() {
         <br />
         <input type="radio" id="c" name="temp" value="0" />
         <label htmlFor="c">Celsius</label>
-      </form>
-      <form id="options-region-form" className="options-form">
         <p>
           <strong>Region:</strong>
         </p>
@@ -23,8 +21,6 @@ export default function Options() {
           <option value="2">Europe</option>
           <option value="3">Asia</option>
         </select>
-      </form>
-      <form id="options-difficulty-form" className="options-form">
         <p>
           <strong>Difficulty:</strong>
         </p>
