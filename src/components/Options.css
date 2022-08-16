@@ -24,6 +24,13 @@
   padding: 10px 0;
   width: 44%;
 }
+.options-form p {
+  margin-top: 10px;
+}
+.options-form label {
+  text-align: left;
+  padding-left: 10px;
+}
 
 #region {
   border-radius: 2px;
