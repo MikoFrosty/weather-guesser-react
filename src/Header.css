@@ -1,10 +1,19 @@
 h1 {
+  position: relative;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-image: linear-gradient(
+    to right,
+    rgb(136, 0, 255),
+    rgb(0, 102, 255)
+  );
   margin: 0;
   padding: 50px;
-  font-size: 6vw;
+  font-size: 5.5vw;
   line-height: 1;
-  text-shadow: -2px -0px 4px rgb(107, 176, 255), 0px 0px 30px white,
-    0px 0px 30px white, 0px 0px 30px white;
+  text-shadow: -2px -1px 0px rgba(255, 255, 255, 0.96);
 }
 
 @media only screen and (max-width: 1000px) {
