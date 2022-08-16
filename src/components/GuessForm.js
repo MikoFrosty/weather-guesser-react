@@ -1,6 +1,6 @@
 import "./GuessForm.css";
 
-export default function GuessForm({ currentCity, onFormSubmit }) {
+export default function GuessForm({ currentCity, onFormSubmit, tempDisplay }) {
   return (
     <>
       <h2>
@@ -8,7 +8,7 @@ export default function GuessForm({ currentCity, onFormSubmit }) {
       </h2>
       <form id="weather-guesser" onSubmit={onFormSubmit}>
         <label htmlFor="guess">
-          Enter Guess (<span id="temp-setting">℉</span>)
+          Enter Guess {tempDisplay}
         </label>
         <input
           type="number"
