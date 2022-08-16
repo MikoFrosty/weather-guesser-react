@@ -1,7 +1,7 @@
 import "./MapAndOptions.css";
 import Options from "./Options";
 
-export default function MapAndOptions({ location }) {
+export default function MapAndOptions({ location, onOptionsChange }) {
   function loadMap() {
     return (
       <iframe
@@ -18,7 +18,7 @@ export default function MapAndOptions({ location }) {
 
   return (
     <div id="map-and-options-wrapper">
-      <Options />
+      <Options onOptionsChange={onOptionsChange}/>
       <div id="map-wrapper">{loadMap()}</div>
     </div>
   );
