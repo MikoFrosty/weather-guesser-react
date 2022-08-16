@@ -9,10 +9,11 @@ import { places } from "./modules/places";
 import FetchWrapper from "./modules/fetchwrapper";
 import Answer from "./components/Answer";
 
-function App() {
+export default function App() {
   const [location, setLocation] = useState(["Loading...", ""]);
-  const [answer, setAnswer] = useState("");
+  const [answer, setAnswer] = useState([0, ""]);
   const [weather, setWeather] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState({
     temp: 1, // 1 - f, 0 - c
     tempDisplay: "℉",
@@ -39,9 +40,23 @@ function App() {
     return str;
   }
 
+  // returns text related to the current difficulty setting
+  function difficultyString() {
+    switch (options.difficulty) {
+      case 0:
+        return "within 10°";
+      case 1:
+        return "within 5°";
+      case 2:
+        return "an exact match";
+      default:
+        return "ERROR";
+    }
+  }
+
   // Loads a new city and updates all the necessary data
   function handleNewCityClick() {
-    setAnswer("");
+    setAnswer([0, ""]);
     setWeather("");
     const getPlaces = () => {
       switch (options.region) {
@@ -87,6 +102,7 @@ function App() {
   // Fetch weather data for the current city and update the state based on user guess
   function handleAnswerSubmit(e) {
     e.preventDefault();
+    setIsLoading(true);
     const guess = Number.parseInt(e.target.guess.value, 10);
 
     const API = new FetchWrapper(
@@ -100,7 +116,6 @@ function App() {
         let script = `The current temp in ${cityString()} is ${
           options.temp ? tempF : tempC
         }${options.tempDisplay}.`;
-        // Remove loader ?
 
         // Handles winning, losing, and displaying proper messages
         const runLogic = (temp) => {
@@ -118,25 +133,13 @@ function App() {
             }
           };
 
-          // Winning and losing messages
+          // Package up the data for the answer component
           if (guess > temp + tempRange()) {
-            setAnswer(
-              <>
-                <span className="loseh-text">Too high!</span> {script}
-              </>
-            );
+            setAnswer([1, script]);
           } else if (guess < temp - tempRange()) {
-            setAnswer(
-              <>
-                <span className="losel-text">Too low!</span> {script}
-              </>
-            );
+            setAnswer([2, script]);
           } else {
-            setAnswer(
-              <>
-                <span className="win-text">YOU WIN!</span> {script}
-              </>
-            );
+            setAnswer([3, script]);
           }
 
           // Display current weather
@@ -160,13 +163,10 @@ function App() {
       })
       .catch((error) => {
         console.error(error);
-        // remove loader ?
-        // answer message
-        //answer.textContent = "The weather is unavailable right now :/";
+        setAnswer([4, "The weather is unavailable right now :/"]);
       })
       .finally(() => {
-        //enable submit button
-        //guessButton.removeAttribute("disabled");
+        setIsLoading(false);
       });
   }
 
@@ -183,14 +183,9 @@ function App() {
             currentCity={cityString()}
             onFormSubmit={handleAnswerSubmit}
             tempDisplay={options.tempDisplay}
+            difficultyString={difficultyString()}
           />
-          <p>
-            <sub>
-              You win if your guess is{" "}
-              <span id="win-condition">within 10°</span>
-            </sub>
-          </p>
-          <Answer answer={answer} weather={weather} />
+          <Answer answer={answer} weather={weather} isLoading={isLoading} />
           <MapAndOptions
             location={location}
             onOptionsChange={handleOptionsChange}
@@ -201,5 +196,3 @@ function App() {
     </>
   );
 }
-
-export default App;
