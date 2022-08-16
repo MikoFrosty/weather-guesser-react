@@ -20,29 +20,55 @@ function App() {
     difficulty: 0, // 0 - Easy, 1 - Medium, 2 - Hard
   });
 
+  // Load the first city on page load
+  useEffect(() => {
+    handleNewCityClick();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // hide options when interacting with other buttons
   useEffect(() => {
     document.querySelector("#options-wrapper").classList.add("hide");
   }, [location, answer]);
 
-  const [city, country] = location;
-  const cityString = `${city
-    .replace(/_/g, " ")
-    .replace(/[,]%20\w+/, "")}, ${country}`;
+  // Turns location data into a string for text display
+  function cityString() {
+    const [city, country] = location;
+    const str = `${city
+      .replace(/_/g, " ")
+      .replace(/[,]%20\w+/, "")}, ${country}`;
+    return str;
+  }
 
-  useEffect(() => {
-    handleNewCityClick();
-  }, []);
-
+  // Loads a new city and updates all the necessary data
   function handleNewCityClick() {
     setAnswer("");
     setWeather("");
-    setLocation(() => places[Math.floor(Math.random() * places.length)]);
+    const getPlaces = () => {
+      switch (options.region) {
+        case 0:
+          return places;
+        case 1:
+          return places.filter((city) => city[3] === "North America");
+        case 2:
+          return places.filter((city) => city[3] === "Europe");
+        case 3:
+          return places.filter((city) => city[3] === "Asia");
+        default:
+          return places;
+      }
+    };
+    const placesList = getPlaces();
+    setLocation(
+      () => placesList[Math.floor(Math.random() * placesList.length)]
+    );
   }
 
+  // toggle options screen when clicking the options button
   function handleOptionsClick() {
     document.querySelector("#options-wrapper").classList.toggle("hide");
   }
 
+  // update options when options form is changed
   function handleOptionsChange(e) {
     const { name, value: v } = e.target;
     const value = Number.parseInt(v);
@@ -58,7 +84,8 @@ function App() {
     }
   }
 
-  function handleFormSubmit(e) {
+  // Fetch weather data for the current city and update the state based on user guess
+  function handleAnswerSubmit(e) {
     e.preventDefault();
     const guess = Number.parseInt(e.target.guess.value, 10);
 
@@ -70,7 +97,7 @@ function App() {
       .then((data) => {
         let tempF = Math.floor(data.current.temp_f);
         let tempC = Math.floor(data.current.temp_c);
-        let script = `The current temp in ${cityString} is ${
+        let script = `The current temp in ${cityString()} is ${
           options.temp ? tempF : tempC
         }${options.tempDisplay}.`;
         // Remove loader ?
@@ -153,8 +180,8 @@ function App() {
             onOptionsClick={handleOptionsClick}
           />
           <GuessForm
-            currentCity={cityString}
-            onFormSubmit={handleFormSubmit}
+            currentCity={cityString()}
+            onFormSubmit={handleAnswerSubmit}
             tempDisplay={options.tempDisplay}
           />
           <p>
