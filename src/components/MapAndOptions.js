@@ -12,13 +12,13 @@ export default function MapAndOptions({ location, onOptionsChange }) {
         scrolling="no"
         marginHeight="0"
         marginWidth="0"
-      ></iframe>
+      />
     );
   }
 
   return (
     <div id="map-and-options-wrapper">
-      <Options onOptionsChange={onOptionsChange}/>
+      <Options onOptionsChange={onOptionsChange} />
       <div id="map-wrapper">{loadMap()}</div>
     </div>
   );
