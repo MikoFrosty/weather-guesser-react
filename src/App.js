@@ -14,13 +14,15 @@ function App() {
   const [answer, setAnswer] = useState("");
   const [weather, setWeather] = useState("");
   const [options, setOptions] = useState({
-    temp: {
-      setting: 1, // 1 - f, 0 - c
-      display: "℉",
-    },
+    temp: 1, // 1 - f, 0 - c
+    tempDisplay: "℉",
     region: 0, // 0 - Global, 1 - North America, 2 - Europe, 3 - Asia
     difficulty: 0, // 0 - Easy, 1 - Medium, 2 - Hard
   });
+
+  useEffect(() => {
+    document.querySelector("#options-wrapper").classList.add("hide");
+  }, [location, answer]);
 
   const [city, country] = location;
   const cityString = `${city
@@ -38,7 +40,22 @@ function App() {
   }
 
   function handleOptionsClick() {
-    // Toggle options screen
+    document.querySelector("#options-wrapper").classList.toggle("hide");
+  }
+
+  function handleOptionsChange(e) {
+    const { name, value: v } = e.target;
+    const value = Number.parseInt(v);
+    setOptions((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    if (name === "temp") {
+      setOptions((prev) => ({
+        ...prev,
+        tempDisplay: value ? "℉" : "℃",
+      }));
+    }
   }
 
   function handleFormSubmit(e) {
@@ -54,8 +71,8 @@ function App() {
         let tempF = Math.floor(data.current.temp_f);
         let tempC = Math.floor(data.current.temp_c);
         let script = `The current temp in ${cityString} is ${
-          options.temp.setting ? tempF : tempC
-        }${options.temp.display}.`;
+          options.temp ? tempF : tempC
+        }${options.tempDisplay}.`;
         // Remove loader ?
 
         // Handles winning, losing, and displaying proper messages
@@ -76,24 +93,39 @@ function App() {
 
           // Winning and losing messages
           if (guess > temp + tempRange()) {
-            setAnswer(<><span className="loseh-text">Too high!</span> {script}</>);
+            setAnswer(
+              <>
+                <span className="loseh-text">Too high!</span> {script}
+              </>
+            );
           } else if (guess < temp - tempRange()) {
-            setAnswer(<><span className="losel-text">Too low!</span> {script}</>);
+            setAnswer(
+              <>
+                <span className="losel-text">Too low!</span> {script}
+              </>
+            );
           } else {
-            setAnswer(<><span className="win-text">YOU WIN!</span> {script}</>);
+            setAnswer(
+              <>
+                <span className="win-text">YOU WIN!</span> {script}
+              </>
+            );
           }
 
           // Display current weather
           setWeather(
             <>
               <p>Current weather: {data.current.condition.text}</p>
-              <img src={data.current.condition.icon} alt={data.current.condition.text}/>
+              <img
+                src={data.current.condition.icon}
+                alt={data.current.condition.text}
+              />
             </>
           );
         };
 
         // Run logic using Fahrenheit or Celsius
-        if (options.temp.setting) {
+        if (options.temp) {
           runLogic(tempF);
         } else {
           runLogic(tempC);
@@ -116,16 +148,26 @@ function App() {
       <div className="App">
         <Header />
         <section id="main-content">
-          <NewCityAndOptions onNewCityClick={handleNewCityClick} />
-          <GuessForm currentCity={cityString} onFormSubmit={handleFormSubmit} />
+          <NewCityAndOptions
+            onNewCityClick={handleNewCityClick}
+            onOptionsClick={handleOptionsClick}
+          />
+          <GuessForm
+            currentCity={cityString}
+            onFormSubmit={handleFormSubmit}
+            tempDisplay={options.tempDisplay}
+          />
           <p>
             <sub>
               You win if your guess is{" "}
               <span id="win-condition">within 10°</span>
             </sub>
           </p>
-          <Answer answer={answer} weather={weather}/>
-          <MapAndOptions location={location} />
+          <Answer answer={answer} weather={weather} />
+          <MapAndOptions
+            location={location}
+            onOptionsChange={handleOptionsChange}
+          />
         </section>
       </div>
       <Footer />
