@@ -1,0 +1,14 @@
+.score-added {
+  animation: highlight-fade 0.5s ease-out;
+}
+
+@keyframes highlight-fade {
+  from {
+    background-color: yellow;
+    opacity: 0;
+  }
+  to {
+    background-color: transparent;
+    opacity: 1;
+  }
+}
