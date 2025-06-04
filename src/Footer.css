@@ -4,7 +4,7 @@ footer {
     align-items: center;
     height: 10vh;
     border-top: 1px solid rgba(250, 250, 250, 0.8);
-    color: rgba(250, 250, 250, 1);
-    background-color: black;
+    color: var(--color-text-light);
+    background-color: var(--color-body-background);
     text-align: center;
   }
