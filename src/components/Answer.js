@@ -1,5 +1,9 @@
 import "./Answer.css";
 
+function Spinner({ active }) {
+  return <div className="spinner" style={{ opacity: active ? 1 : 0 }} />;
+}
+
 export default function Answer({ answer, weather, isLoading }) {
   function getAnswer() {
     const [condition, script] = answer;
@@ -33,16 +37,21 @@ export default function Answer({ answer, weather, isLoading }) {
   }
 
   return (
-    <>
-      <p id="answer" className={isLoading ? "loader" : undefined}>
+    <div className="answer-wrapper">
+      <Spinner active={isLoading} />
+      <p id="answer" className="fade" style={{ opacity: isLoading ? 0 : 1 }}>
         {getAnswer()}
       </p>
       <div
         id="current-weather"
-        style={{ borderTop: weather ? "1px solid black" : "none" }}
+        className="fade"
+        style={{
+          opacity: isLoading ? 0 : 1,
+          borderTop: weather ? "1px solid black" : "none",
+        }}
       >
         {weather}
       </div>
-    </>
+    </div>
   );
 }

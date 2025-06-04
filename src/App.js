@@ -100,7 +100,7 @@ export default function App() {
   }
 
   // Fetch weather data for the current city and update the state based on user guess
-  function handleAnswerSubmit(e) {
+  async function handleAnswerSubmit(e) {
     e.preventDefault();
     setIsLoading(true);
     const guess = Number.parseInt(e.target.guess.value, 10);
@@ -109,65 +109,63 @@ export default function App() {
       "https://api.weatherapi.com/v1/current.json?key=72b4230dbcfc4df5b07205043212612&q="
     );
 
-    API.get(location[0])
-      .then((data) => {
-        let tempF = Math.floor(data.current.temp_f);
-        let tempC = Math.floor(data.current.temp_c);
-        let script = `The current temp in ${cityString()} is ${
-          options.temp ? tempF : tempC
-        }${options.tempDisplay}.`;
+    try {
+      const data = await API.get(location[0]);
+      let tempF = Math.floor(data.current.temp_f);
+      let tempC = Math.floor(data.current.temp_c);
+      let script = `The current temp in ${cityString()} is ${
+        options.temp ? tempF : tempC
+      }${options.tempDisplay}.`;
 
-        // Handles winning, losing, and displaying proper messages
-        const runLogic = (temp) => {
-          // Expand win conditions based on difficulty
-          const tempRange = () => {
-            switch (options.difficulty) {
-              case 0:
-                return 10;
-              case 1:
-                return 5;
-              case 2:
-                return 0;
-              default:
-                return 10;
-            }
-          };
-
-          // Package up the data for the answer component
-          if (guess > temp + tempRange()) {
-            setAnswer([1, script]);
-          } else if (guess < temp - tempRange()) {
-            setAnswer([2, script]);
-          } else {
-            setAnswer([3, script]);
+      // Handles winning, losing, and displaying proper messages
+      const runLogic = (temp) => {
+        // Expand win conditions based on difficulty
+        const tempRange = () => {
+          switch (options.difficulty) {
+            case 0:
+              return 10;
+            case 1:
+              return 5;
+            case 2:
+              return 0;
+            default:
+              return 10;
           }
-
-          // Display current weather
-          setWeather(
-            <>
-              <p>Current weather: {data.current.condition.text}</p>
-              <img
-                src={data.current.condition.icon}
-                alt={data.current.condition.text}
-              />
-            </>
-          );
         };
 
-        // Run logic using Fahrenheit or Celsius
-        if (options.temp) {
-          runLogic(tempF);
+        // Package up the data for the answer component
+        if (guess > temp + tempRange()) {
+          setAnswer([1, script]);
+        } else if (guess < temp - tempRange()) {
+          setAnswer([2, script]);
         } else {
-          runLogic(tempC);
+          setAnswer([3, script]);
         }
-      })
-      .catch((error) => {
-        console.error(error);
-        setAnswer([4, "The weather is unavailable right now :/"]);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+
+        // Display current weather
+        setWeather(
+          <>
+            <p>Current weather: {data.current.condition.text}</p>
+            <img
+              src={data.current.condition.icon}
+              alt={data.current.condition.text}
+            />
+          </>
+        );
+      };
+
+      // Run logic using Fahrenheit or Celsius
+      if (options.temp) {
+        runLogic(tempF);
+      } else {
+        runLogic(tempC);
+      }
+    } catch (error) {
+      console.error(error);
+      setAnswer([4, "The weather is unavailable right now :/"]);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
