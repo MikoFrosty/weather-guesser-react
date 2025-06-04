@@ -1,0 +1,17 @@
+#city-selector-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+#city-selector {
+  border: 1px solid rgb(0, 0, 199);
+  border-radius: 4px;
+  padding: 4px;
+  min-width: 150px;
+  text-align: center;
+}
+
+#city-selector:focus {
+  border: 2px solid rgb(0, 0, 199);
+  outline: none;
+}
