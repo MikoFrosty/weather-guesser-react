@@ -40,5 +40,15 @@ export const places = [
     ['San_Diego', 'California (USA)', 1394928, 'North America', 32.71571, -117.16472],
     ['Miami', 'Florida (USA)', 441003, 'North America', 25.77427, -80.19366],
     ['Anchorage', 'Alaska (USA)', 298695, 'North America', 61.21806, -149.90028],
-    ['Honolulu', 'Hawaii (USA)', 371657, 'North America', 21.30694, -157.85833]
+    ['Honolulu', 'Hawaii (USA)', 371657, 'North America', 21.30694, -157.85833],
+    ['Lagos', 'Nigeria', 15300000, 'Africa', 6.455, 3.384],
+    ['Karachi', 'Pakistan', 15741000, 'Asia', 24.86, 67.01],
+    ['Toronto', 'Canada', 2731571, 'North America', 43.65107, -79.347015],
+    ['Sao_Paulo', 'Brazil', 12330000, 'South America', -23.55052, -46.633308],
+    ['San_Francisco', 'California (USA)', 883305, 'North America', 37.7749, -122.4194],
+    ['Dublin', 'Ireland', 553165, 'Europe', 53.3498, -6.2603],
+    ['Johannesburg', 'South Africa', 957441, 'Africa', -26.2041, 28.0473],
+    ['Auckland', 'New Zealand', 1657000, 'Australia', -36.8485, 174.7633],
+    ['Delhi', 'India', 16787941, 'Asia', 28.6139, 77.2090],
+    ['Lisbon', 'Portugal', 504718, 'Europe', 38.7223, -9.1393],
 ];
