@@ -1,0 +1,15 @@
+#history-wrapper {
+  margin-top: 20px;
+}
+
+#history-controls {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+#history-list {
+  list-style: none;
+  padding: 0;
+}

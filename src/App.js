@@ -5,6 +5,7 @@ import Footer from "./Footer";
 import NewCityAndOptions from "./components/NewCityAndOptions";
 import GuessForm from "./components/GuessForm";
 import MapAndOptions from "./components/MapAndOptions";
+import History from "./components/History";
 import { places } from "./modules/places";
 import FetchWrapper from "./modules/fetchwrapper";
 import Answer from "./components/Answer";
@@ -14,6 +15,7 @@ export default function App() {
   const [answer, setAnswer] = useState([0, ""]);
   const [weather, setWeather] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [history, setHistory] = useState([]);
   const [options, setOptions] = useState({
     temp: 1, // 1 - f, 0 - c
     tempDisplay: "℉",
@@ -99,6 +101,10 @@ export default function App() {
     }
   }
 
+  function handleClearHistory() {
+    setHistory([]);
+  }
+
   // Fetch weather data for the current city and update the state based on user guess
   function handleAnswerSubmit(e) {
     e.preventDefault();
@@ -134,13 +140,21 @@ export default function App() {
           };
 
           // Package up the data for the answer component
+          let resultText = "";
           if (guess > temp + tempRange()) {
             setAnswer([1, script]);
+            resultText = "Too high";
           } else if (guess < temp - tempRange()) {
             setAnswer([2, script]);
+            resultText = "Too low";
           } else {
             setAnswer([3, script]);
+            resultText = "Correct";
           }
+          setHistory((prev) => [
+            ...prev,
+            `Guess ${guess}${options.tempDisplay} for ${cityString()}: ${resultText} (actual ${temp}${options.tempDisplay})`,
+          ]);
 
           // Display current weather
           setWeather(
@@ -186,6 +200,7 @@ export default function App() {
             difficultyString={difficultyString()}
           />
           <Answer answer={answer} weather={weather} isLoading={isLoading} />
+          <History history={history} onClear={handleClearHistory} />
           <MapAndOptions
             location={location}
             onOptionsChange={handleOptionsChange}
