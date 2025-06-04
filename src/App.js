@@ -26,7 +26,7 @@ export default function App() {
     handleNewCityClick();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // hide options when interacting with other buttons
+  // Hide the options menu whenever the location or answer state updates
   useEffect(() => {
     document.querySelector("#options-wrapper").classList.add("hide");
   }, [location, answer]);
