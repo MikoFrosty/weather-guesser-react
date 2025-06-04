@@ -25,7 +25,7 @@ export default function App() {
 
   // Show onboarding for new visitors
   useEffect(() => {
-    if (!localStorage.getItem("seenOnboarding")) {
+    if (!localStorage.getItem("seenOnboarding") === "true") {
       setShowOnboarding(true);
     }
   }, []);
