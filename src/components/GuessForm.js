@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import "./GuessForm.css";
 
 export default function GuessForm({
@@ -6,12 +7,30 @@ export default function GuessForm({
   tempDisplay,
   difficultyString,
 }) {
+  const [submitted, setSubmitted] = useState(false);
+
+  function handleSubmit(e) {
+    onFormSubmit(e);
+    setSubmitted(true);
+  }
+
+  useEffect(() => {
+    if (submitted) {
+      const t = setTimeout(() => setSubmitted(false), 300);
+      return () => clearTimeout(t);
+    }
+  }, [submitted]);
+
   return (
     <>
       <h2>
         How hot is <span id="current-city">{currentCity}</span> right now?
       </h2>
-      <form id="weather-guesser" onSubmit={onFormSubmit}>
+      <form
+        id="weather-guesser"
+        onSubmit={handleSubmit}
+        className={submitted ? "submitted" : undefined}
+      >
         <label htmlFor="guess">Enter Guess {tempDisplay}</label>
         <input
           type="number"
