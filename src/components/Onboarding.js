@@ -2,14 +2,20 @@ import "./Onboarding.css";
 
 export default function Onboarding({ onClose }) {
   return (
-    <div id="onboarding-wrapper">
-      <div id="onboarding-box">
-        <h2>Welcome to Weather Guesser!</h2>
-        <p>1. Click <strong>New City</strong> to choose a location.</p>
-        <p>2. Enter your temperature guess and submit.</p>
-        <p>3. Use <strong>Options</strong> to change units, region, and difficulty.</p>
+    <div id="onboarding-overlay">
+      <div id="onboarding-card">
+        <h2>Getting Started</h2>
+        <ol>
+          <li>
+            Select <strong>New City</strong> to pick a location.
+          </li>
+          <li>Enter your temperature guess and submit.</li>
+          <li>
+            Use <strong>Options</strong> to adjust units, region and difficulty.
+          </li>
+        </ol>
         <button id="onboarding-close" className="button" onClick={onClose}>
-          Got it!
+          Start Playing
         </button>
       </div>
     </div>
