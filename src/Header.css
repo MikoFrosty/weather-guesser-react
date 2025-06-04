@@ -6,8 +6,8 @@ h1 {
   -moz-background-clip: text;
   background-image: linear-gradient(
     to right,
-    rgb(136, 0, 255),
-    rgb(0, 102, 255)
+    var(--color-header-gradient-start),
+    var(--color-header-gradient-end)
   );
   margin: 0;
   padding: 50px;
