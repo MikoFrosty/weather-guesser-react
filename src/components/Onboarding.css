@@ -1,0 +1,38 @@
+#onboarding-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+#onboarding-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  padding: 30px 40px;
+  width: 90%;
+  max-width: 400px;
+  font-size: 1rem;
+  text-align: center;
+}
+
+#onboarding-card h2 {
+  margin-top: 0;
+}
+
+#onboarding-card ol {
+  text-align: left;
+  margin: 20px 0;
+  padding-left: 20px;
+}
+
+#onboarding-close {
+  margin-top: 20px;
+}
+
+.hide {
+  display: none !important;
+}

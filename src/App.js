@@ -5,6 +5,7 @@ import Footer from "./Footer";
 import NewCityAndOptions from "./components/NewCityAndOptions";
 import GuessForm from "./components/GuessForm";
 import MapAndOptions from "./components/MapAndOptions";
+import Onboarding from "./components/Onboarding";
 import DarkModeToggle from "./components/DarkModeToggle";
 import About from "./components/About";
 import { Routes, Route } from "react-router-dom";
@@ -19,6 +20,7 @@ export default function App() {
   const [answer, setAnswer] = useState([0, ""]);
   const [weather, setWeather] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [darkMode, setDarkMode] = useState(() => {
     const stored = localStorage.getItem("darkMode");
@@ -31,6 +33,13 @@ export default function App() {
     region: 0, // 0 - Global, 1 - North America, 2 - Europe, 3 - Asia
     difficulty: 0, // 0 - Easy, 1 - Medium, 2 - Hard
   });
+
+  // Show onboarding for new visitors
+  useEffect(() => {
+    if (localStorage.getItem("seenOnboarding") !== "true") {
+      setShowOnboarding(true);
+    }
+  }, []);
 
   // Load the first city on page load
   useEffect(() => {
@@ -117,6 +126,11 @@ export default function App() {
     }
   }
 
+  function handleOnboardingClose() {
+    localStorage.setItem("seenOnboarding", "true");
+    setShowOnboarding(false);
+  }
+  
   function handleDarkToggle() {
     setDarkMode((prev) => !prev);
   }
@@ -221,6 +235,9 @@ export default function App() {
 
   return (
     <>
+      {showOnboarding && (
+        <Onboarding onClose={handleOnboardingClose} />
+      )}
       <div className="App">
         <DarkModeToggle darkMode={darkMode} onToggle={handleDarkToggle} />
         <Header onDailyClick={() => setDailyMode((prev) => !prev)} />
