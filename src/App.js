@@ -200,11 +200,13 @@ export default function App() {
             difficultyString={difficultyString()}
           />
           <Answer answer={answer} weather={weather} isLoading={isLoading} />
-          <History history={history} onClear={handleClearHistory} />
-          <MapAndOptions
-            location={location}
-            onOptionsChange={handleOptionsChange}
-          />
+          <div id="map-history-wrapper">
+            <MapAndOptions
+              location={location}
+              onOptionsChange={handleOptionsChange}
+            />
+            <History history={history} onClear={handleClearHistory} />
+          </div>
         </section>
       </div>
       <Footer />

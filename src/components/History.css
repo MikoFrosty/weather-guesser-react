@@ -1,15 +1,20 @@
 #history-wrapper {
-  margin-top: 20px;
+  margin-top: 0;
+  width: 220px;
+  font-size: 0.9rem;
+  margin-left: 10px;
 }
 
 #history-controls {
   margin-bottom: 10px;
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: 5px;
 }
 
 #history-list {
   list-style: none;
   padding: 0;
+  max-height: 300px;
+  overflow-y: auto;
 }
