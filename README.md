@@ -2,6 +2,10 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Daily Challenge Leaderboard
+
+The Daily Challenge mode stores scores in a temporary online database powered by [CrudCrud](https://crudcrud.com/). Each endpoint lasts for 24 hours and requires no sign up. Scores older than a day automatically disappear.
+
 ## Available Scripts
 
 In the project directory, you can run:
