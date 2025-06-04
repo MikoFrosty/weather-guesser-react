@@ -8,12 +8,14 @@ import MapAndOptions from "./components/MapAndOptions";
 import { places } from "./modules/places";
 import FetchWrapper from "./modules/fetchwrapper";
 import Answer from "./components/Answer";
+import Message from "./components/Message";
 
 export default function App() {
   const [location, setLocation] = useState(["Loading...", ""]);
   const [answer, setAnswer] = useState([0, ""]);
   const [weather, setWeather] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [options, setOptions] = useState({
     temp: 1, // 1 - f, 0 - c
     tempDisplay: "℉",
@@ -58,6 +60,7 @@ export default function App() {
   function handleNewCityClick() {
     setAnswer([0, ""]);
     setWeather("");
+    setErrorMessage("");
     const getPlaces = () => {
       switch (options.region) {
         case 0:
@@ -103,6 +106,7 @@ export default function App() {
   function handleAnswerSubmit(e) {
     e.preventDefault();
     setIsLoading(true);
+    setErrorMessage("");
     const guess = Number.parseInt(e.target.guess.value, 10);
 
     const API = new FetchWrapper(
@@ -164,6 +168,9 @@ export default function App() {
       .catch((error) => {
         console.error(error);
         setAnswer([4, "The weather is unavailable right now :/"]);
+        setErrorMessage(
+          "Unable to fetch the weather. Check your network or try a different city."
+        );
       })
       .finally(() => {
         setIsLoading(false);
@@ -185,6 +192,7 @@ export default function App() {
             tempDisplay={options.tempDisplay}
             difficultyString={difficultyString()}
           />
+          <Message text={errorMessage} type="error" />
           <Answer answer={answer} weather={weather} isLoading={isLoading} />
           <MapAndOptions
             location={location}
