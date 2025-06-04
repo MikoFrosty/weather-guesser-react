@@ -2,7 +2,7 @@ import "./Options.css";
 
 export default function Options({ onOptionsChange }) {
   return (
-    <div id="options-wrapper" className="hide">
+    <div id="options-wrapper">
       <form className="options-form" onChange={onOptionsChange}>
         <p>
           <strong>Temperature:</strong>

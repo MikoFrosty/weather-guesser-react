@@ -26,10 +26,6 @@ export default function App() {
     handleNewCityClick();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Hide the options menu whenever the location or answer state updates
-  useEffect(() => {
-    document.querySelector("#options-wrapper").classList.add("hide");
-  }, [location, answer]);
 
   // Turns location data into a string for text display
   function cityString() {
@@ -78,10 +74,6 @@ export default function App() {
     );
   }
 
-  // toggle options screen when clicking the options button
-  function handleOptionsClick() {
-    document.querySelector("#options-wrapper").classList.toggle("hide");
-  }
 
   // update options when options form is changed
   function handleOptionsChange(e) {
@@ -175,10 +167,7 @@ export default function App() {
       <div className="App">
         <Header />
         <section id="main-content">
-          <NewCityAndOptions
-            onNewCityClick={handleNewCityClick}
-            onOptionsClick={handleOptionsClick}
-          />
+          <NewCityAndOptions onNewCityClick={handleNewCityClick} />
           <GuessForm
             currentCity={cityString()}
             onFormSubmit={handleAnswerSubmit}

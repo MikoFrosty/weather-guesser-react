@@ -1,6 +1,7 @@
 #map-and-options-wrapper {
-  display: inline-block;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 #map-wrapper {
   display: block;
