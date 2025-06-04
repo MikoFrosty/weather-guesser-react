@@ -1,0 +1,11 @@
+.message {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.message.error {
+  color: rgb(201, 0, 0);
+  background-color: rgba(201, 0, 0, 0.1);
+}
