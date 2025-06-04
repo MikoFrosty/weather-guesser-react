@@ -81,7 +81,7 @@ export default function App() {
   }
 
   // Loads a new city and updates all the necessary data
-  function handleNewCityClick() {
+  function handleNewCityClick(city) {
     setAnswer([0, ""]);
     setWeather("");
     setErrorMessage("");
@@ -100,9 +100,14 @@ export default function App() {
       }
     };
     const placesList = getPlaces();
-    setLocation(
-      () => placesList[Math.floor(Math.random() * placesList.length)]
-    );
+    if (city) {
+      const chosen = placesList.find((c) => c[0] === city);
+      if (chosen) {
+        setLocation(chosen);
+        return;
+      }
+    }
+    setLocation(() => placesList[Math.floor(Math.random() * placesList.length)]);
   }
 
   // toggle options screen when clicking the options button
