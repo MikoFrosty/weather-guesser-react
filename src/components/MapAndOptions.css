@@ -12,7 +12,7 @@ iframe {
   height: 400px;
   animation-duration: 2s;
   animation-name: fadein;
-  border: 2px solid black;
+  border: 2px solid var(--color-text-dark);
 }
 
 @keyframes fadein {

@@ -25,13 +25,13 @@
 }
 
 .loseh-text {
-  color: rgb(201, 0, 0);
+  color: var(--color-danger);
 }
 .losel-text {
-  color: rgb(0, 0, 255);
+  color: var(--color-info);
 }
 .win-text {
-  color: rgb(0, 161, 0);
+  color: var(--color-success);
 }
 
 @keyframes spin {

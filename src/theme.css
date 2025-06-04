@@ -1,0 +1,14 @@
+:root {
+  --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  --color-primary: rgb(43, 43, 241);
+  --color-primary-dark: rgb(4, 4, 150);
+  --color-header-gradient-start: rgb(136, 0, 255);
+  --color-header-gradient-end: rgb(0, 102, 255);
+  --color-text-light: rgba(250, 250, 250, 1);
+  --color-text-dark: black;
+  --color-danger: rgb(201, 0, 0);
+  --color-success: rgb(0, 161, 0);
+  --color-info: rgb(0, 0, 255);
+  --color-background-light: rgba(230, 230, 230, 1);
+  --color-body-background: black;
+}
