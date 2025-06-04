@@ -3,11 +3,12 @@ import Options from "./Options";
 
 export default function MapAndOptions({ location, onOptionsChange }) {
   function loadMap() {
+    const cityQuery = encodeURIComponent(location[0]);
     return (
       <iframe
         title="map"
         id="gmap_canvas"
-        src={`https://maps.google.com/maps?q=${location[0]}&t=k&z=3&ie=UTF8&iwloc=&output=embed`}
+        src={`https://maps.google.com/maps?q=${cityQuery}&t=k&z=3&ie=UTF8&iwloc=&output=embed`}
         frameBorder="0"
         scrolling="no"
         marginHeight="0"
