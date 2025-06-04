@@ -1,0 +1,14 @@
+#about {
+  margin: 20px auto;
+  max-width: 800px;
+  padding: 20px;
+  line-height: 1.4;
+}
+
+#about h2 {
+  margin-bottom: 10px;
+}
+
+#about p {
+  margin-bottom: 10px;
+}
