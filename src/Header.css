@@ -33,3 +33,13 @@ h1 {
     padding: 10px;
   }
 }
+
+.App-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#daily-button {
+  margin-right: 20px;
+}

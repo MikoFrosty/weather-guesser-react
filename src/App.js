@@ -9,6 +9,7 @@ import DarkModeToggle from "./components/DarkModeToggle";
 import { places } from "./modules/places";
 import FetchWrapper from "./modules/fetchwrapper";
 import Answer from "./components/Answer";
+import DailyChallenge from "./components/DailyChallenge";
 
 export default function App() {
   const [location, setLocation] = useState(["Loading...", ""]);
@@ -19,6 +20,7 @@ export default function App() {
     const stored = localStorage.getItem("darkMode");
     return stored ? JSON.parse(stored) : false;
   });
+  const [dailyMode, setDailyMode] = useState(false);
   const [options, setOptions] = useState({
     temp: 1, // 1 - f, 0 - c
     tempDisplay: "℉",
@@ -189,24 +191,28 @@ export default function App() {
     <>
       <div className="App">
         <DarkModeToggle darkMode={darkMode} onToggle={handleDarkToggle} />
-        <Header />
-        <section id="main-content">
-          <NewCityAndOptions
-            onNewCityClick={handleNewCityClick}
-            onOptionsClick={handleOptionsClick}
-          />
-          <GuessForm
-            currentCity={cityString()}
-            onFormSubmit={handleAnswerSubmit}
-            tempDisplay={options.tempDisplay}
-            difficultyString={difficultyString()}
-          />
-          <Answer answer={answer} weather={weather} isLoading={isLoading} />
-          <MapAndOptions
-            location={location}
-            onOptionsChange={handleOptionsChange}
-          />
-        </section>
+        <Header onDailyClick={() => setDailyMode((prev) => !prev)} />
+        {dailyMode ? (
+          <DailyChallenge onExit={() => setDailyMode(false)} />
+        ) : (
+          <section id="main-content">
+            <NewCityAndOptions
+              onNewCityClick={handleNewCityClick}
+              onOptionsClick={handleOptionsClick}
+            />
+            <GuessForm
+              currentCity={cityString()}
+              onFormSubmit={handleAnswerSubmit}
+              tempDisplay={options.tempDisplay}
+              difficultyString={difficultyString()}
+            />
+            <Answer answer={answer} weather={weather} isLoading={isLoading} />
+            <MapAndOptions
+              location={location}
+              onOptionsChange={handleOptionsChange}
+            />
+          </section>
+        )}
       </div>
       <Footer />
     </>
