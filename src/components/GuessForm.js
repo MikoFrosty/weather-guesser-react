@@ -6,6 +6,8 @@ export default function GuessForm({
   onFormSubmit,
   tempDisplay,
   difficultyString,
+  onHintClick,
+  hintsLeft,
 }) {
   const [submitted, setSubmitted] = useState(false);
 
@@ -44,6 +46,15 @@ export default function GuessForm({
           required
         />
         <input type="submit" id="submit" className="button" value="Submit" />
+        <button
+          type="button"
+          id="hint-button"
+          className="button"
+          onClick={onHintClick}
+          disabled={hintsLeft <= 0}
+        >
+          Hint ({hintsLeft})
+        </button>
       </form>
       <p>
         <sub>You win if your guess is {difficultyString}</sub>
