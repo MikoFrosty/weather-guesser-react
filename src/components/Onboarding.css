@@ -1,0 +1,28 @@
+#onboarding-wrapper {
+  font-size: 0.8em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+  background-color: rgba(250, 250, 250, 0.9);
+  border: 2px solid black;
+}
+
+#onboarding-box {
+  text-align: center;
+  padding: 20px;
+}
+
+#onboarding-close {
+  margin-top: 10px;
+}
+
+.hide {
+  display: none !important;
+}

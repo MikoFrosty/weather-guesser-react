@@ -3,6 +3,6 @@ import App from './App';
 
 test('renders the header', () => {
   render(<App />);
-  const headerElement = screen.getByText(/weather guesser!/i);
-  expect(headerElement).toBeInTheDocument();
+  const headerElement = screen.getByRole('heading', { level: 1 });
+  expect(headerElement).toHaveTextContent(/weather guesser!/i);
 });

@@ -5,6 +5,7 @@ import Footer from "./Footer";
 import NewCityAndOptions from "./components/NewCityAndOptions";
 import GuessForm from "./components/GuessForm";
 import MapAndOptions from "./components/MapAndOptions";
+import Onboarding from "./components/Onboarding";
 import { places } from "./modules/places";
 import FetchWrapper from "./modules/fetchwrapper";
 import Answer from "./components/Answer";
@@ -14,12 +15,20 @@ export default function App() {
   const [answer, setAnswer] = useState([0, ""]);
   const [weather, setWeather] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(false);
   const [options, setOptions] = useState({
     temp: 1, // 1 - f, 0 - c
     tempDisplay: "℉",
     region: 0, // 0 - Global, 1 - North America, 2 - Europe, 3 - Asia
     difficulty: 0, // 0 - Easy, 1 - Medium, 2 - Hard
   });
+
+  // Show onboarding for new visitors
+  useEffect(() => {
+    if (!localStorage.getItem("seenOnboarding")) {
+      setShowOnboarding(true);
+    }
+  }, []);
 
   // Load the first city on page load
   useEffect(() => {
@@ -99,6 +108,11 @@ export default function App() {
     }
   }
 
+  function handleOnboardingClose() {
+    localStorage.setItem("seenOnboarding", "true");
+    setShowOnboarding(false);
+  }
+
   // Fetch weather data for the current city and update the state based on user guess
   function handleAnswerSubmit(e) {
     e.preventDefault();
@@ -172,6 +186,9 @@ export default function App() {
 
   return (
     <>
+      {showOnboarding && (
+        <Onboarding onClose={handleOnboardingClose} />
+      )}
       <div className="App">
         <Header />
         <section id="main-content">
