@@ -43,3 +43,13 @@ h1 {
 #daily-button {
   margin-right: 20px;
 }
+
+#about-link {
+  margin-right: 15px;
+  color: inherit;
+  text-decoration: none;
+}
+
+#about-link:hover {
+  text-decoration: underline;
+}

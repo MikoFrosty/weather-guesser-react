@@ -6,6 +6,8 @@ import NewCityAndOptions from "./components/NewCityAndOptions";
 import GuessForm from "./components/GuessForm";
 import MapAndOptions from "./components/MapAndOptions";
 import DarkModeToggle from "./components/DarkModeToggle";
+import About from "./components/About";
+import { Routes, Route } from "react-router-dom";
 import { places } from "./modules/places";
 import FetchWrapper from "./modules/fetchwrapper";
 import Answer from "./components/Answer";
@@ -194,33 +196,38 @@ export default function App() {
       });
   }
 
+  const mainContent = dailyMode ? (
+    <DailyChallenge onExit={() => setDailyMode(false)} />
+  ) : (
+    <section id="main-content">
+      <NewCityAndOptions
+        onNewCityClick={handleNewCityClick}
+        onOptionsClick={handleOptionsClick}
+      />
+      <GuessForm
+        currentCity={cityString()}
+        onFormSubmit={handleAnswerSubmit}
+        tempDisplay={options.tempDisplay}
+        difficultyString={difficultyString()}
+      />
+      <Message text={errorMessage} type="error" />
+      <Answer answer={answer} weather={weather} isLoading={isLoading} />
+      <MapAndOptions
+        location={location}
+        onOptionsChange={handleOptionsChange}
+      />
+    </section>
+  );
+
   return (
     <>
       <div className="App">
         <DarkModeToggle darkMode={darkMode} onToggle={handleDarkToggle} />
         <Header onDailyClick={() => setDailyMode((prev) => !prev)} />
-        {dailyMode ? (
-          <DailyChallenge onExit={() => setDailyMode(false)} />
-        ) : (
-          <section id="main-content">
-            <NewCityAndOptions
-              onNewCityClick={handleNewCityClick}
-              onOptionsClick={handleOptionsClick}
-            />
-            <GuessForm
-              currentCity={cityString()}
-              onFormSubmit={handleAnswerSubmit}
-              tempDisplay={options.tempDisplay}
-              difficultyString={difficultyString()}
-            />
-            <Message text={errorMessage} type="error" />
-            <Answer answer={answer} weather={weather} isLoading={isLoading} />
-            <MapAndOptions
-              location={location}
-              onOptionsChange={handleOptionsChange}
-            />
-          </section>
-        )}
+        <Routes>
+          <Route path="/" element={mainContent} />
+          <Route path="/about" element={<About />} />
+        </Routes>
       </div>
       <Footer />
     </>
