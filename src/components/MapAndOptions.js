@@ -19,8 +19,8 @@ export default function MapAndOptions({ location, onOptionsChange }) {
 
   return (
     <div id="map-and-options-wrapper">
-      <Options onOptionsChange={onOptionsChange} />
       <div id="map-wrapper">{loadMap()}</div>
+      <Options onOptionsChange={onOptionsChange} />
     </div>
   );
 }

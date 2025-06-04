@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 20px;
 }
 #map-wrapper {
   display: block;
@@ -32,6 +33,14 @@ iframe {
   iframe {
     width: 420px;
     height: 400px;
+  }
+}
+
+@media only screen and (min-width: 800px) {
+  #map-and-options-wrapper {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
   }
 }
 
