@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import FetchWrapper from "../modules/fetchwrapper";
 import { places } from "../modules/places";
 import Answer from "./Answer";
 import "./GuessForm.css";
+import "./DailyChallenge.css";
 
 export default function DailyChallenge({ onExit }) {
   const today = new Date().toISOString().slice(0, 10);
@@ -20,6 +21,7 @@ export default function DailyChallenge({ onExit }) {
   const [weather, setWeather] = useState("");
   const [scores, setScores] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const scoreRefs = useRef([]);
 
   useEffect(() => {
     const API = new FetchWrapper(
@@ -37,6 +39,14 @@ export default function DailyChallenge({ onExit }) {
         setScores([]);
       });
   }, [today]);
+
+  useEffect(() => {
+    scoreRefs.current.forEach((item) => item && item.classList.add("score-added"));
+    const t = setTimeout(() => {
+      scoreRefs.current.forEach((item) => item && item.classList.remove("score-added"));
+    }, 500);
+    return () => clearTimeout(t);
+  }, [scores]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -125,7 +135,7 @@ export default function DailyChallenge({ onExit }) {
         {scores
           .sort((a, b) => a.diff - b.diff)
           .map((s, idx) => (
-            <li key={idx}>
+            <li key={idx} ref={(el) => (scoreRefs.current[idx] = el)}>
               {s.user}: {s.diff}° off
             </li>
           ))}
