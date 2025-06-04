@@ -16,6 +16,9 @@ export default function App() {
   const [location, setLocation] = useState(["Loading...", ""]);
   const [answer, setAnswer] = useState([0, ""]);
   const [weather, setWeather] = useState("");
+  const [hintsLeft, setHintsLeft] = useState(3);
+  const [hintMessage, setHintMessage] = useState("");
+  const [lastGuess, setLastGuess] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [darkMode, setDarkMode] = useState(() => {
@@ -74,6 +77,9 @@ export default function App() {
     setAnswer([0, ""]);
     setWeather("");
     setErrorMessage("");
+    setHintsLeft(3);
+    setHintMessage("");
+    setLastGuess(null);
     const getPlaces = () => {
       switch (options.region) {
         case 0:
@@ -119,12 +125,38 @@ export default function App() {
     setDarkMode((prev) => !prev);
   }
 
+  function handleHintClick() {
+    if (hintsLeft <= 0 || lastGuess === null) return;
+    const API = new FetchWrapper(
+      "https://api.weatherapi.com/v1/current.json?key=72b4230dbcfc4df5b07205043212612&q="
+    );
+    API.get(location[0])
+      .then((data) => {
+        const temp = options.temp
+          ? Math.floor(data.current.temp_f)
+          : Math.floor(data.current.temp_c);
+        if (lastGuess > temp) {
+          setHintMessage("Lower");
+        } else if (lastGuess < temp) {
+          setHintMessage("Higher");
+        } else {
+          setHintMessage("Exact!");
+        }
+        setHintsLeft((prev) => prev - 1);
+      })
+      .catch(() => {
+        setHintMessage("Hint unavailable");
+      });
+  }
+
   // Fetch weather data for the current city and update the state based on user guess
   function handleAnswerSubmit(e) {
     e.preventDefault();
     setIsLoading(true);
     setErrorMessage("");
+    setHintMessage("");
     const guess = Number.parseInt(e.target.guess.value, 10);
+    setLastGuess(guess);
 
     const API = new FetchWrapper(
       "https://api.weatherapi.com/v1/current.json?key=72b4230dbcfc4df5b07205043212612&q="
@@ -212,7 +244,10 @@ export default function App() {
               onFormSubmit={handleAnswerSubmit}
               tempDisplay={options.tempDisplay}
               difficultyString={difficultyString()}
+              onHintClick={handleHintClick}
+              hintsLeft={hintsLeft}
             />
+            <Message text={hintMessage} />
             <Message text={errorMessage} type="error" />
             <Answer answer={answer} weather={weather} isLoading={isLoading} />
             <MapAndOptions

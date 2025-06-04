@@ -48,6 +48,14 @@
     padding: 6px;
 }
 
+#hint-button {
+  margin-left: 10px;
+  padding: 7px;
+}
+#hint-button:focus {
+  padding: 6px;
+}
+
 @media only screen and (max-width: 600px) {
   #weather-guesser input {
     min-width: 60px;
