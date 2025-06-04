@@ -5,6 +5,7 @@ import Footer from "./Footer";
 import NewCityAndOptions from "./components/NewCityAndOptions";
 import GuessForm from "./components/GuessForm";
 import MapAndOptions from "./components/MapAndOptions";
+import DarkModeToggle from "./components/DarkModeToggle";
 import { places } from "./modules/places";
 import FetchWrapper from "./modules/fetchwrapper";
 import Answer from "./components/Answer";
@@ -14,6 +15,10 @@ export default function App() {
   const [answer, setAnswer] = useState([0, ""]);
   const [weather, setWeather] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => {
+    const stored = localStorage.getItem("darkMode");
+    return stored ? JSON.parse(stored) : false;
+  });
   const [options, setOptions] = useState({
     temp: 1, // 1 - f, 0 - c
     tempDisplay: "℉",
@@ -30,6 +35,12 @@ export default function App() {
   useEffect(() => {
     document.querySelector("#options-wrapper").classList.add("hide");
   }, [location, answer]);
+
+  // Apply dark mode class and store preference
+  useEffect(() => {
+    document.body.classList.toggle("dark", darkMode);
+    localStorage.setItem("darkMode", JSON.stringify(darkMode));
+  }, [darkMode]);
 
   // Turns location data into a string for text display
   function cityString() {
@@ -97,6 +108,10 @@ export default function App() {
         tempDisplay: value ? "℉" : "℃",
       }));
     }
+  }
+
+  function handleDarkToggle() {
+    setDarkMode((prev) => !prev);
   }
 
   // Fetch weather data for the current city and update the state based on user guess
@@ -173,6 +188,7 @@ export default function App() {
   return (
     <>
       <div className="App">
+        <DarkModeToggle darkMode={darkMode} onToggle={handleDarkToggle} />
         <Header />
         <section id="main-content">
           <NewCityAndOptions
