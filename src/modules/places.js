@@ -33,7 +33,7 @@ export const places = [
     ['Paris', 'France', 2138551, 'Europe', 48.85341, 2.3488], 
     ['Minsk', 'Belarus', 1742124, 'Europe', 53.9, 27.56667],
     ['Warsaw', 'Poland', 1702139, 'Europe', 52.22977, 21.01178],
-    ['Barcelona,%20spain', 'Spain', 1621537, 'Europe', 41.38879, 2.15899],
+    ['Barcelona,%20Spain', 'Spain', 1621537, 'Europe', 41.38879, 2.15899],
     ['Phoenix', 'Arizona (USA)', 1608139, 'North America', 33.44838, -112.07404],
     ['Montreal', 'Canada', 1600000, 'North America', 45.50884, -73.58781],
     ['Stockholm', 'Sweden', 1515017, 'Europe', 59.32938, 18.06871],
