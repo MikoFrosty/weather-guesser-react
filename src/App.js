@@ -6,9 +6,14 @@ import NewCityAndOptions from "./components/NewCityAndOptions";
 import GuessForm from "./components/GuessForm";
 import MapAndOptions from "./components/MapAndOptions";
 import Onboarding from "./components/Onboarding";
+import DarkModeToggle from "./components/DarkModeToggle";
+import About from "./components/About";
+import { Routes, Route } from "react-router-dom";
 import { places } from "./modules/places";
 import FetchWrapper from "./modules/fetchwrapper";
 import Answer from "./components/Answer";
+import Message from "./components/Message";
+import DailyChallenge from "./components/DailyChallenge";
 
 export default function App() {
   const [location, setLocation] = useState(["Loading...", ""]);
@@ -16,6 +21,12 @@ export default function App() {
   const [weather, setWeather] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [darkMode, setDarkMode] = useState(() => {
+    const stored = localStorage.getItem("darkMode");
+    return stored ? JSON.parse(stored) : false;
+  });
+  const [dailyMode, setDailyMode] = useState(false);
   const [options, setOptions] = useState({
     temp: 1, // 1 - f, 0 - c
     tempDisplay: "℉",
@@ -39,6 +50,12 @@ export default function App() {
   useEffect(() => {
     document.querySelector("#options-wrapper").classList.add("hide");
   }, [location, answer]);
+
+  // Apply dark mode class and store preference
+  useEffect(() => {
+    document.body.classList.toggle("dark", darkMode);
+    localStorage.setItem("darkMode", JSON.stringify(darkMode));
+  }, [darkMode]);
 
   // Turns location data into a string for text display
   function cityString() {
@@ -67,6 +84,7 @@ export default function App() {
   function handleNewCityClick() {
     setAnswer([0, ""]);
     setWeather("");
+    setErrorMessage("");
     const getPlaces = () => {
       switch (options.region) {
         case 0:
@@ -112,11 +130,16 @@ export default function App() {
     localStorage.setItem("seenOnboarding", "true");
     setShowOnboarding(false);
   }
+  
+  function handleDarkToggle() {
+    setDarkMode((prev) => !prev);
+  }
 
   // Fetch weather data for the current city and update the state based on user guess
   function handleAnswerSubmit(e) {
     e.preventDefault();
     setIsLoading(true);
+    setErrorMessage("");
     const guess = Number.parseInt(e.target.guess.value, 10);
 
     const API = new FetchWrapper(
@@ -178,11 +201,37 @@ export default function App() {
       .catch((error) => {
         console.error(error);
         setAnswer([4, "The weather is unavailable right now :/"]);
+        setErrorMessage(
+          "Unable to fetch the weather. Check your network or try a different city."
+        );
       })
       .finally(() => {
         setIsLoading(false);
       });
   }
+
+  const mainContent = dailyMode ? (
+    <DailyChallenge onExit={() => setDailyMode(false)} />
+  ) : (
+    <section id="main-content">
+      <NewCityAndOptions
+        onNewCityClick={handleNewCityClick}
+        onOptionsClick={handleOptionsClick}
+      />
+      <GuessForm
+        currentCity={cityString()}
+        onFormSubmit={handleAnswerSubmit}
+        tempDisplay={options.tempDisplay}
+        difficultyString={difficultyString()}
+      />
+      <Message text={errorMessage} type="error" />
+      <Answer answer={answer} weather={weather} isLoading={isLoading} />
+      <MapAndOptions
+        location={location}
+        onOptionsChange={handleOptionsChange}
+      />
+    </section>
+  );
 
   return (
     <>
@@ -190,24 +239,12 @@ export default function App() {
         <Onboarding onClose={handleOnboardingClose} />
       )}
       <div className="App">
-        <Header />
-        <section id="main-content">
-          <NewCityAndOptions
-            onNewCityClick={handleNewCityClick}
-            onOptionsClick={handleOptionsClick}
-          />
-          <GuessForm
-            currentCity={cityString()}
-            onFormSubmit={handleAnswerSubmit}
-            tempDisplay={options.tempDisplay}
-            difficultyString={difficultyString()}
-          />
-          <Answer answer={answer} weather={weather} isLoading={isLoading} />
-          <MapAndOptions
-            location={location}
-            onOptionsChange={handleOptionsChange}
-          />
-        </section>
+        <DarkModeToggle darkMode={darkMode} onToggle={handleDarkToggle} />
+        <Header onDailyClick={() => setDailyMode((prev) => !prev)} />
+        <Routes>
+          <Route path="/" element={mainContent} />
+          <Route path="/about" element={<About />} />
+        </Routes>
       </div>
       <Footer />
     </>
