@@ -1,6 +1,16 @@
+import { useEffect, useState } from "react";
 import "./Answer.css";
 
 export default function Answer({ answer, weather, isLoading }) {
+  const [animClass, setAnimClass] = useState("");
+
+  useEffect(() => {
+    if (!isLoading && answer[0] !== 0) {
+      setAnimClass("new-answer");
+      const t = setTimeout(() => setAnimClass(""), 500);
+      return () => clearTimeout(t);
+    }
+  }, [answer, isLoading]);
   function getAnswer() {
     const [condition, script] = answer;
 
@@ -34,7 +44,10 @@ export default function Answer({ answer, weather, isLoading }) {
 
   return (
     <>
-      <p id="answer" className={isLoading ? "loader" : undefined}>
+      <p
+        id="answer"
+        className={`${isLoading ? "loader" : ""} ${animClass}`.trim()}
+      >
         {getAnswer()}
       </p>
       <div

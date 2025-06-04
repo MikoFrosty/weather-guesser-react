@@ -1,5 +1,10 @@
 #answer {
   padding: 16px;
+  transition: color 0.5s ease, opacity 0.5s ease;
+}
+
+.new-answer {
+  animation: fade-in 0.5s ease;
 }
 
 #current-weather {
@@ -40,6 +45,15 @@
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
